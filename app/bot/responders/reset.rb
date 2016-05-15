@@ -3,7 +3,7 @@ module Responders
     respond_to "scan-data", "text", "link", "picture", "video", "sticker"
     
     def can_handle?
-      match_message 'Reset'
+      match_message 'Reset!'
     end
     
     def handle

@@ -26,17 +26,17 @@ module Responders
         pt.each do |player|
           winners.push("#{player.player_name}:  #{player.points} pts")
         end
-        
+
         results = winners.join("\n")
         if match_message("End game")
           g.started = false
           g.save!
           [
-            text_response("--={Scores}=-- \n #{results}"),
+            text_response("--={Scores}=--\n ---Round #{g.rounds}---\n #{results}"),
             text_response("Are you sure you wanna quite?\n(this will erase all scores and players)", ["Resume", "Quit"])
           ]
           else
-            text_response("--={Scores}=-- \n #{results}", ["Resume", "End game"])
+            text_response("--={Scores}=-- \n ---Round #{g.rounds}---\n#{results}", ["Resume", "End game"])
           end
 
 
@@ -54,6 +54,7 @@ module Responders
               record = Roo::Spreadsheet.open('./Truths.xlsx')
               truth = record.sheet(category).column(1).sample
               points = rand(1..5)
+              g.lastpoint = points
               g.rounds += 1
               g.save!        
               text_response("#{truth} \n(#{points} pts)", ["Answer", "Skip"])

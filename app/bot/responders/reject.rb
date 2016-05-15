@@ -8,6 +8,7 @@ module Responders
     
     def handle
     	Game.find(user.game_id).destroy
+      user.destroy!
       text_response("Why not?")
     end
     
